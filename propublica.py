@@ -54,6 +54,7 @@ def parse_org_data(org_json, manual_data):
     org_data["official_name"] = org_json["organization"]["name"]
     org_data["pronum"] = org_json["organization"]["id"]
     org_data["filings"] = {}
+    incomplete_filings = []
     for filing in org_json["filings_with_data"]:
         filing_data = {}
         # TODO: Somehow factor out the fields
@@ -68,7 +69,6 @@ def parse_org_data(org_json, manual_data):
         filing_data["netass"] = filing["totassetsend"] - filing["totliabend"]
         org_data["filings"][filing_data["year"]] = filing_data
     for filing in org_json["filings_without_data"]:
-        incomplete_filings = []
         filing_data = {}
         filing_data["source"] = "Manual"
         filing_data["year"] = filing["tax_prd_yr"]
